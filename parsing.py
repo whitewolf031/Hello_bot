@@ -10,11 +10,12 @@ headers = {
 sorov = requests.get(url, headers=headers)
 data = sorov.text
 
-def request_to_site(product_list):
-    soup = BeautifulSoup(data, "html.parser")
-    main_block = soup.find("div", class_="row")
-    block = main_block.find_all("div", class_="col-6")
-    for product in block:
+product_list = []
+
+soup = BeautifulSoup(data, "html.parser")
+main_block = soup.find("div", class_="row")
+block = main_block.find_all("div", class_="col-6")
+for product in block:
         image = product.find("img", class_="img-fluid")["data-src"]
         product_name = product.find("span", class_="product__item__info-title").get_text()
         product_price = product.find("span", class_="product__item-price").get_text()
@@ -26,7 +27,6 @@ def request_to_site(product_list):
             "Kredit": product_credit
         })
 
-    return product_list
 
 
 # pip install sherlock-project
