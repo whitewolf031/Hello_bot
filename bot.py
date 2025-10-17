@@ -1,10 +1,14 @@
 from telebot import TeleBot
 from keyboards import *
+from parsing import request_to_site
 
 token = "7595867257:AAHVZaPpWl4Tss_CITtWX3a67BBrpBjuBx0"
 # key = "406c553c497446c099c12940102f423f"
 
 bot = TeleBot(token)
+
+new_list = request_to_site([])
+# print(new_list)
 
 @bot.message_handler(commands="start")
 def start(message):
@@ -29,7 +33,16 @@ def menu_languange(call):
 def general_menu(message):
     chat_id = message.chat.id
     if message.text == "Noutbook":
-        bot.send_message(chat_id, "Noutbook")
+        for product in new_list:
+            name = product["Kampyuter_nomi"]
+            image = product["Image"]
+            price = product["Kampyuter_narxi"]
+            credit = product["Kredit"]
+            bot.send_message(chat_id, f"Kompyuter nomi: {name},/n "
+                            f"Kompyuter rasmi: {image},/n " 
+                            f"Kompyuter narxi: {price},/n "
+                            f"Kompyuter krediti: {credit}/n "
+                            )
     
     if message.text == "Telefon":
         bot.send_message(chat_id, "Telefon")
